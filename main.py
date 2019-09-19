@@ -40,10 +40,6 @@ def main():
     test_data_list = test_data_file.readlines()
     test_data_file.close()
 
-    # all_values = test_data_list[0].split(',')
-    # print(all_values[0])
-    # print(NN.query((np.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01))
-
     # Test the Neural Network
     # Scorecard for how well the network performs, initially empty
     scorecard = []
@@ -55,7 +51,6 @@ def main():
 
         # Correct answer in first value
         correct_label = int(all_values[0])
-        # print(correct_label, "correct label")
 
         # Scale and shift the inputs
         inputs = (np.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
@@ -65,8 +60,6 @@ def main():
 
         # The index of the highest value corresponds to the label
         label = np.argmax(outputs)
-        # print(label, "networks answer")
-        # print('--------------')
 
         # Append correct or incorrect to list
         if label == correct_label:

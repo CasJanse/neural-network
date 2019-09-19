@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7007efa-637d-439a-9af6-7dd385d7d9c7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/weights_file.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weights_who.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weights_wih.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NeuralNetwork.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeuralNetwork.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
