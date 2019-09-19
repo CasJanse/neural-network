@@ -66,3 +66,12 @@ class NeuralNetwork:
 
         return final_outputs
 
+    def save_weights(self):
+        np.savetxt('weights_who.csv', self.who, delimiter=',', fmt='%f')
+        np.savetxt('weights_wih.csv', self.wih, delimiter=',', fmt='%f')
+        pass
+
+    def load_weights(self):
+        self.who = np.genfromtxt('weights_who.csv', delimiter=',')
+        self.wih = np.genfromtxt('weights_wih.csv', delimiter=',')
+        pass

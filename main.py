@@ -10,25 +10,30 @@ def main():
     learning_rate = 0.3
     NN = NeuralNetwork(input_nodes_amount, hidden_nodes_amount, output_nodes_amount, learning_rate)
 
-    # Load number image training data (100 records)
-    train_data_file = open("mnist_train.csv")
-    train_data_list = train_data_file.readlines()
-    train_data_file.close()
+    # Use previously trained network or train a new one
+    load_weights = input("Load weights from previous networks?")
+    if load_weights:
+        NN.load_weights()
+    else:
+        # Load number image training data (100 records)
+        train_data_file = open("mnist_train.csv")
+        train_data_list = train_data_file.readlines()
+        train_data_file.close()
 
-    # Train the Neural Network
-    for record in train_data_list:
-        # Split the records at every comma
-        all_values = record.split(',')
+        # Train the Neural Network
+        for record in train_data_list:
+            # Split the records at every comma
+            all_values = record.split(',')
 
-        # Scale input to range 0.01 to 1.00
-        inputs = (np.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
+            # Scale input to range 0.01 to 1.00
+            inputs = (np.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
 
-        # Create the target output values (all 0.01, except the desired label which is 0.99)
-        targets = np.zeros(output_nodes_amount) + 0.01
+            # Create the target output values (all 0.01, except the desired label which is 0.99)
+            targets = np.zeros(output_nodes_amount) + 0.01
 
-        # all_values[0] is the target value for this record
-        targets[int(all_values[0])] = 0.99
-        NN.train(inputs, targets)
+            # all_values[0] is the target value for this record
+            targets[int(all_values[0])] = 0.99
+            NN.train(inputs, targets)
 
     # Test the Neural Network
     test_data_file = open("mnist_test.csv", "r")
@@ -69,9 +74,15 @@ def main():
         else:
             scorecard.append(0)
 
+    print(scorecard)
+
     # Calculate the performance score
     scorecard_array = np.asarray(scorecard)
     print("performance = ", scorecard_array.sum() / scorecard_array.size)
+
+    save_weights = input("Save current network weights to file?")
+    if save_weights:
+        NN.save_weights()
 
 
 main()
