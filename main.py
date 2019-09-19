@@ -4,18 +4,21 @@ import matplotlib.pyplot
 
 
 def main():
+    # Set amount of nodes in each layer
     input_nodes_amount = 784
     hidden_nodes_amount = 100
     output_nodes_amount = 10
     learning_rate = 0.3
+
+    # Create the neural network
     NN = NeuralNetwork(input_nodes_amount, hidden_nodes_amount, output_nodes_amount, learning_rate)
 
     # Use previously trained network or train a new one
-    load_weights = input("Load weights from previous networks?")
-    if load_weights:
+    load_weights = input("Load weights from previous networks? (y/n)")
+    if load_weights.lower()[0] == "y":
         NN.load_weights()
     else:
-        # Load number image training data (100 records)
+        # Load number image training data (60.000 records)
         train_data_file = open("mnist_train.csv")
         train_data_list = train_data_file.readlines()
         train_data_file.close()
@@ -35,7 +38,7 @@ def main():
             targets[int(all_values[0])] = 0.99
             NN.train(inputs, targets)
 
-    # Test the Neural Network
+    # Test the Neural Network (10.000 records)
     test_data_file = open("mnist_test.csv", "r")
     test_data_list = test_data_file.readlines()
     test_data_file.close()
@@ -73,9 +76,12 @@ def main():
     scorecard_array = np.asarray(scorecard)
     print("performance = ", scorecard_array.sum() / scorecard_array.size)
 
-    save_weights = input("Save current network weights to file?")
-    if save_weights:
-        NN.save_weights()
+    save_weights = " "
+    while save_weights.lower()[0] != "y" and save_weights.lower()[0] != "n":
+        save_weights = input("Save current network weights to file? (y/n)")
+        if save_weights.lower()[0] == "y":
+            NN.save_weights()
+            print('saved weights')
 
 
 main()
