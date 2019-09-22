@@ -7,10 +7,11 @@ def main():
     input_nodes_amount = 784
     hidden_nodes_amount = 100
     output_nodes_amount = 10
-    learning_rate = 0.3
+    learning_rate = 0.2
+    hidden_layers = 1
 
     # Create the neural network
-    NN = NeuralNetwork(input_nodes_amount, hidden_nodes_amount, output_nodes_amount, learning_rate)
+    NN = NeuralNetwork(input_nodes_amount, hidden_nodes_amount, output_nodes_amount, learning_rate, hidden_layers)
 
     # Use previously trained network or train a new one
     load_weights = input("Load weights from previous networks? (y/n)")
