@@ -3,7 +3,16 @@ import scipy.special
 
 
 class NeuralNetwork:
-    def __init__(self, inputNodes, hiddenNodes, outputNodes, learningRate, hiddenLayers):
+    # Initialises the network
+    # @param name: The name of the network to be used in storing weights
+    # @param inputNodes: The amount of input nodes in the network
+    # @param hiddenNodes: The amount of hidden nodes in each hidden layer
+    # @param outputNodes: The amount of nodes in the output layer
+    # @param learningRate: The learning rate of the network, value between 0 and 1
+    # @param hiddenLayers: The amount of hidden layers between the input and output layer
+    def __init__(self, name, inputNodes, hiddenNodes, outputNodes, learningRate, hiddenLayers):
+        self.name = name
+
         # Set the number of nodes in each input, hidden, output layer
         self.inodes = inputNodes
         self.hnodes = hiddenNodes
@@ -34,6 +43,9 @@ class NeuralNetwork:
 
         pass
 
+    # Trains the network by adjusting the weights using backpropagation
+    # @param inputs_list: Array containing all input values
+    # @param target_list: Array containing expected output, is used to adjust network
     def train(self, inputs_list, targets_list):
         # Convert input list to 2d array
         output_array = [0] * (self.hidden_layers + 2)
@@ -65,7 +77,7 @@ class NeuralNetwork:
         # hidden_errors = np.dot(self.who.T, output_errors)
 
         # Update all weights based on their errors
-        for x in range(len(self.weights) - 1):
+        for x in range(len(self.weights)):
             self.weights[-(x + 1)] += self.lr * np.dot((error_array[-(x + 1)] * output_array[-(x + 1)] * (1.0 - output_array[-(x + 1)])), np.transpose(output_array[-(x + 2)]))
 
         # # Update the weights for the links between the hidden and output layers
@@ -76,6 +88,9 @@ class NeuralNetwork:
 
         pass
 
+    # Query the network to get output
+    # @param inputs_list: Array containing all input values to be used int he query
+    # @return: The outputs from the network
     def query(self, inputs_list):
         # Convert input list to 2d array
         output_array = [0] * (self.hidden_layers + 2)
@@ -86,14 +101,16 @@ class NeuralNetwork:
         for x in range(len(output_array) - 1):
             output_array[(x + 1)] = self.activation_function(np.dot(self.weights[x], output_array[x]))
 
-        return output_array[-1]
+        return output_array[-1].flatten()
 
+    # Writes the current weights of the network out to a named .csv file
     def save_weights(self):
-        np.savetxt('../csv/weights_who.csv', self.who, delimiter=',', fmt='%f')
-        np.savetxt('../csv/weights_wih.csv', self.wih, delimiter=',', fmt='%f')
+        for i in range(len(self.weights)):
+            np.savetxt('../networks/weights_{}_{}.csv'.format(i, self.name), self.weights[i], delimiter=',', fmt='%f')
         pass
 
+    # Load the weights from a saved .csv file based on the networks name
     def load_weights(self):
-        self.who = np.genfromtxt('../csv/weights_who.csv', delimiter=',')
-        self.wih = np.genfromtxt('../csv/weights_wih.csv', delimiter=',')
+        for i in range(len(self.weights)):
+            self.weights[i] = np.genfromtxt('../networks/weights_{}_{}.csv'.format(i, self.name), delimiter=',')
         pass
